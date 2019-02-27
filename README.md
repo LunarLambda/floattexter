@@ -3,12 +3,19 @@
 Inspired by [this tweet](https://twitter.com/LunarLambda/status/1096227870345703425).
 This program generates C programs which print a float array as a text string.
 
-## Compilation and Configuration
+## Configuration
 
-- Check `config.h`  for number of digits used and ~~platform endianness.~~
-- Check `config.mk` for C compiler and C compiler flags.
+`config.h`:
+- digits: Number of digits used for printing float values. Defaults to 7.
 
-Then just hit `make` ¯\\\_(ツ)\_/¯
+`config.mk`:
+- CC: C Compiler. Defaults to `clang`.
+- CFLAGS: C Compiler Flags. Defaults to `-O2`.
+- PREFIX: Prefix used for `make install`. Defaults to `/usr`.
+
+## Compilation and Installation
+
+Just hit `make install`. ¯\\\_(ツ)\_/¯
 
 ## Usage
 
@@ -22,13 +29,4 @@ Then just hit `make` ¯\\\_(ツ)\_/¯
 
 Q: Why?
 
-A: Why not. I love stupid shit.
-
-
-Q: Is that seriously all?
-
-A: Yep.
-
-## License
-
-GPL3, I guess? Does it matter? Do what you want with this thing lmao
+A: Why not.
