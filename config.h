@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 /* Number of digits used for printing float values 
- * 7 seems sufficient, we do 9 for good measure
+ * 7 seems sufficient, we do 9 for good measure.
  */
 static int digits = 9;
 
