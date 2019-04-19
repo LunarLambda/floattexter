@@ -1,58 +1,43 @@
 #include <stdio.h>
 #include <string.h>
-#include "config.h" /* digits */
+#include "config.h"
 
-/* This prints bytes as a float
- * Relies on digits from `config.h`.
- */
 void print_as_float(char *bytes)
 {
-    printf("%.*e", digits, *(float*)bytes);
+    // Avoid strict aliasing violation
+    float   f;
+    memcpy(&f, bytes, sizeof(float));
+    printf("%s%.*e%s", TEXT_BEG, DIGITS, f, TEXT_END);
 }
 
 int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        printf("Usage: %s <string>\n", argv[0]);
+        printf("Usage: %s <text>\n", argv[0]);
         return 1;
     }
 
-    /* Input string */
-    char *string = argv[1];
-    int   length = strlen(string);
+    char  *string = argv[1];
+    size_t length = strlen(string) + 1; // Include null terminator
+    size_t  index = 0;
 
-    /* Print the start of the program */
-    printf("#include <stdio.h>\n\nstatic float text[] =\n{\n");
+    printf("%s", PROG_BEG);
 
-    /* Loop to print the floats */
-    for (int i = 0; i + sizeof(float) - 1 < length; i += sizeof(float))
+    while(index + sizeof(float) <= length)
     {
-        printf("\t");
-        print_as_float(&string[i]);
-        printf(",\n");
+        print_as_float(&string[index]);
+        index += sizeof(float);
     }
 
-    /* Print the leftovers we missed, includes null-terminator.
-     * TODO: Make this less bad somehow
-     */
     if (length % sizeof(float))
     {
-        char copy[sizeof(float)] = { 0 };
-        int index = length - (length % sizeof(float));
+        char    copy[sizeof(float)];
         strncpy(copy, &string[index], sizeof(float));
-        printf("\t");
         print_as_float(copy);
-        printf("\n");
-    }
-    else
-    {
-        /* TODO: Relies on 0.0f containing a null byte, might not be true in some universe. */
-        printf("\t0\n");
     }
 
-    /* Print the rest  of the program */
-    printf("};\n\nint main()\n{\n\tputs((char*)text);\n}\n");
+    printf("%s", PROG_END);
 
     return 0;
 }

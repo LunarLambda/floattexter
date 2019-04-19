@@ -1,26 +1,63 @@
 # FloatTexter
 
-Inspired by [this tweet](https://twitter.com/LunarLambda/status/1096227870345703425).
+Inspired by [this tweet](https://twitter.com/lunasorcery/status/1084623111100817408).  
 This program generates C programs which print the given string, stored as an array of floats.
 
 ## Configuration
 
-`config.h`:
-- digits: Number of digits used for printing float values. Defaults to `9`.
+In `config.mk`:
 
-`config.mk`:
-- CC: C Compiler. Defaults to `clang`.
-- CFLAGS: C Compiler Flags. Defaults to `-O2 -std=c99 -Wall`.
-- PREFIX: Prefix used for `make install`. Defaults to `/usr/local`.
+Variable | Description             | Default Value
+---------|-------------------------|--------------
+CC       | C Compiler              | `clang`
+CFLAGS   | C Compiler Flags        | `-O2 -std=c11 -Wall -Wextra -Wpedantic`
+PREFIX   | Installation Prefix     | `/usr/local`
+BINDIR   | Directory for binaries  | `$(PREFIX)/bin`
+
+In `main.c`:
+
+Variable | Description                       | Default Value
+---------|-----------------------------------|--------------
+PROG_BEG | Program Start                     | `"#include <stdio.h>\n\nstatic float text[] =\n{\n"`
+PROG_END | Program End                       | `"};\n\nint main(void)\n{\n    puts((char*)(void*)text);\n}\n"`
+TEXT_BEG | Text before number                | `"    "`
+TEXT_END | Text after  number                | `",\n"`
+DIGITS   | Digits used when printing numbers | `FLT_DECIMAL_DIG` (Requires C11)
 
 ## Compilation
 
 Run `make`.
 
+## Installation
+
+Run `make install`.
+
 ## Usage
 
 `floattexter <string>` will print the generated program to stdout.
 
-## Example
+## Examples
 
-![Example](https://cdn.discordapp.com/attachments/506367803473788930/546036604846735360/Lf02KqNV.png)
+```
+$ floattexter "Hello, World"
+#include <stdio.h>
+
+static float text[] =
+{
+    1.143139122e+27,
+    1.761127013e+14,
+    1.744670964e+22,
+    0.000000000e+00,
+};
+
+int main(void)
+{
+    puts((char*)(void*)text);
+}
+```
+
+```
+$ floattexter "Hello, World" | clang -o test -x c -
+$ ./test
+Hello, World
+```

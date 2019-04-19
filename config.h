@@ -1,9 +1,12 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
-/* Number of digits used for printing float values 
- * 7 seems sufficient, we do 9 for good measure.
- */
-static int digits = 9;
+#include <float.h>
 
-#endif /* CONFIG_H */
+const char *PROG_BEG = "#include <stdio.h>\n\nstatic float text[] =\n{\n";
+const char *PROG_END = "};\n\nint main(void)\n{\n    puts((char*)(void*)text);\n}\n";
+const char *TEXT_BEG = "    ";
+const char *TEXT_END = ",\n";
+const int     DIGITS = FLT_DECIMAL_DIG;
+
+#endif
