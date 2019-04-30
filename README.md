@@ -19,9 +19,9 @@ In `main.c`:
 Variable | Description                       | Default Value
 ---------|-----------------------------------|--------------
 PROG_BEG | Program Start                     | "#include <stdio.h>\n\nstatic float text[] =\n{\n"
-PROG_END | Program End                       | "};\n\nint main(void)\n{\n&nbsp;&nbsp;&nbsp;&nbsp;puts((char*)(void*)text);\n}\n"
+PROG_END | Program End                       | "};\n\nint main(void)\n{\n&nbsp;&nbsp;&nbsp;&nbsp;puts((char*)text);\n}\n"
 TEXT_BEG | Text before number                | "&nbsp;&nbsp;&nbsp;&nbsp;"
-TEXT_END | Text after  number                | ",\n"
+TEXT_END | Text after number                 | ",\n"
 DIGITS   | Digits used when printing numbers | FLT_DECIMAL_DIG (Requires C11)
 
 ## Compilation
