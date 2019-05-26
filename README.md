@@ -52,12 +52,12 @@ static float text[] =
 
 int main(void)
 {
-    puts((char*)(void*)text);
+    puts((char*)text);
 }
 ```
 
+Run with:
 ```
-$ floattexter "Hello, World" | clang -o test -x c -
-$ ./test
+$ floattexter "Hello, World" | clang -o out -x c - && ./test
 Hello, World
 ```
