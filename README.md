@@ -14,7 +14,7 @@ CFLAGS   | C Compiler Flags        | -O2 -std=c11 -Wall -Wextra -Wpedantic
 PREFIX   | Installation Prefix     | /usr/local
 BINDIR   | Directory for binaries  | $(PREFIX)/bin
 
-In `main.c`:
+In `config.h`:
 
 Variable | Description                       | Default Value
 ---------|-----------------------------------|--------------
